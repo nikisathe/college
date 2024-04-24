@@ -16,14 +16,11 @@ const college_connection = mysql.createConnection({
 
 college_connection.connect((err) => {
   if (err) {
-    console.log('error')
-  }else{
+    console.log('error');
+  } else {
     console.log('Connected to the college database!');
-}
-  
+  }
 });
-
-
 
 app.post('/check', (req, res) => {
   const college_code = req.body.college_code;
@@ -37,8 +34,7 @@ app.post('/check', (req, res) => {
       res.status(404).json({ error: 'College code not found!' });
     } else {
       if (results[0].college_code === college_code) {
-     
-  console.log('successfully run')
+        console.log('successfully run');
       } else {
         res.status(403).json({ error: 'College code is not valid!' });
       }
@@ -46,8 +42,6 @@ app.post('/check', (req, res) => {
   });
 });
 
-
-
 app.listen(port, () => {
-  console.log('Server is running on port 3000');
+  console.log(`Server is running on port ${port}`);
 });
