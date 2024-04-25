@@ -2,16 +2,20 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config(); // Load environment variables from .env file
 const app = express();
 const port = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const college_connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'college',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 college_connection.connect((err) => {
@@ -34,7 +38,7 @@ app.post('/check', (req, res) => {
       res.status(404).json({ error: 'College code not found!' });
     } else {
       if (results[0].college_code === college_code) {
-        console.log('successfully run');
+        res.status(200).json({ message: 'College code found successfully!', data: results[0] });
       } else {
         res.status(403).json({ error: 'College code is not valid!' });
       }
