@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const college_connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
- 
   database: process.env.DB_DATABASE,
 });
 
